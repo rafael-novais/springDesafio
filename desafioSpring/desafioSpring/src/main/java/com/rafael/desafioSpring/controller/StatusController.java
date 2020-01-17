@@ -2,11 +2,8 @@ package com.rafael.desafioSpring.controller;
 
 import java.util.List;
 
-import com.rafael.desafioSpring.domain.dto.response.CategoriaResponse;
 import com.rafael.desafioSpring.domain.dto.response.StatusResponse;
-import com.rafael.desafioSpring.domain.mapper.CategoriaMapper;
 import com.rafael.desafioSpring.domain.mapper.StatusMapper;
-import com.rafael.desafioSpring.service.CategoriaEventoService;
 import com.rafael.desafioSpring.service.StatusEventoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
