@@ -1,11 +1,13 @@
 package com.rafael.desafioSpring.service;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.rafael.desafioSpring.domain.entities.Evento;
+import com.rafael.desafioSpring.exception.DataNotFoundException;
 import com.rafael.desafioSpring.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,8 @@ public class EventoService {
 
     public Evento findById(Integer id) {
         Optional<Evento> evento = eventoRepository.findById(id);
-        return evento.get();
+        
+        return evento.orElseThrow(() -> new DataNotFoundException("Evento não encontrado!"));
     }
 
     public void deleteEvento(Integer id) {
@@ -39,14 +42,18 @@ public class EventoService {
     }
 
     public Evento updateEvento(Integer id, Evento model) {
-        Optional<Evento> client = eventoRepository.findById(id);
-        //client.orElseThrow(() -> new DataNotFoundException("Client Not found"));
-        Evento c = client.get();
+        Optional<Evento> evento = eventoRepository.findById(id);
+        evento.orElseThrow(() -> new DataNotFoundException("Client Not found"));
+        Evento e = evento.get();
         
-        //c.setName(model.getName());
+        e.setNome(model.getNome());
+        e.setLocal(model.getLocal());
+        e.setLimiteVagas(model.getLimiteVagas());
+        e.setDescricao(model.getDescricao());
+        
         //c.setPhone(model.getPhone());
         
-        return eventoRepository.save(c);
+        return eventoRepository.save(e);
     }
     
 }

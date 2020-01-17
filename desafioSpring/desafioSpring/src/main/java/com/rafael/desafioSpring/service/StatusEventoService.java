@@ -1,5 +1,6 @@
 package com.rafael.desafioSpring.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class StatusEventoService {
     public StatusEvento findById(Integer id) {
         Optional<StatusEvento> evento = statusEventoRepository.findById(id);
         return evento.get();
+    }
+
+    public List<StatusEvento> listStatus() {
+        return statusEventoRepository.findAll();
     }
 
     // public void deleteEvento(Integer id) {
