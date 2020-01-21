@@ -1,8 +1,12 @@
 package com.rafael.desafioSpring.domain.dto.request;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.StatusEvento;
@@ -18,24 +22,33 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EventoCreateRequest {
 
-    //@NotEmpty(message = "Data não pode ser null")
+    @NotNull(message = "idCategoriaEvento não pode ser null")
     private Integer idCategoriaEvento;
 
+    @NotNull(message = "idEventoStatus não pode ser null")
     private Integer idEventoStatus;
 
-    //@NotEmpty(message = "Data não pode ser null")
+    @Size(max = 255)
+    @NotBlank(message = "Sem entradas em branco por favor")
+    @NotEmpty(message = "Nome não pode ser null")
     private String nome;
 
-    private LocalDateTime dataHoraInicio;
+    @NotNull(message = "dataHoraInicio não pode ser null")
+    private Date dataHoraInicio;
 
-    private LocalDateTime dataHoraFim;
+    @NotNull(message = "dataHoraFim não pode ser null")
+    private Date dataHoraFim;
 
-    //@NotEmpty(message = "Data não pode ser null")
+    @Size(max = 255)
+    @NotBlank(message = "Sem entradas em branco por favor")
+    @NotEmpty(message = "Local não pode ser null")
     private String local;
 
-    //@NotEmpty(message = "Data não pode ser null")
+    @Size(max = 255)
+    @NotBlank(message = "Sem entradas em branco por favor")
+    @NotEmpty(message = "Descrição não pode ser null")
     private String descricao;
 
-    //@NotEmpty(message = "Data não pode ser null")
+    @NotNull(message = "Limite vagas não pode ser null")
     private Integer limiteVagas;
 }

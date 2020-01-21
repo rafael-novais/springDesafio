@@ -1,6 +1,7 @@
 package com.rafael.desafioSpring.domain.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -20,8 +21,8 @@ public class EventoResponse {
 
     private String nome;
     private CategoriaEvento categoria;
-    private LocalDateTime dataHoraInicio;
-    private LocalDateTime dataHoraFim;
+    private Date dataHoraInicio;
+    private Date dataHoraFim;
     private String local;
     private String descricao;
     private Integer limiteVagas;

@@ -1,6 +1,7 @@
 package com.rafael.desafioSpring.domain.entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class Evento {
     private String nome;
 
     @Column(nullable = false)
-    private LocalDateTime DataHoraInicio;
+    private Date DataHoraInicio;
 
     @Column(nullable = false)
-    private LocalDateTime DataHoraFim;
+    private Date DataHoraFim;
 
     @Column(nullable = false)
     private String Local;

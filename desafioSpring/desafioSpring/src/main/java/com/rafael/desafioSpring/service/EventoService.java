@@ -2,11 +2,14 @@ package com.rafael.desafioSpring.service;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.rafael.desafioSpring.domain.entities.Evento;
+import com.rafael.desafioSpring.exception.DataErradaException;
 import com.rafael.desafioSpring.exception.DataNotFoundException;
 import com.rafael.desafioSpring.repository.*;
 
@@ -23,7 +26,9 @@ public class EventoService {
     }
 
     public Evento createEvento(Evento model) {
+
         return eventoRepository.save(model);
+              
     }
 
     public List<Evento> listEvento() {
