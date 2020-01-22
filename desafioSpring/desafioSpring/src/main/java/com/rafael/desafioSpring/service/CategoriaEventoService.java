@@ -33,8 +33,4 @@ public class CategoriaEventoService {
         return evento.get();
     }
 
-    // public void deleteEvento(Integer id) {
-    //     eventoRepository.delete(findById(id));;
-    //     listEvento();
-    // }
 }

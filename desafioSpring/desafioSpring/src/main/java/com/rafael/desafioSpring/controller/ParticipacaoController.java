@@ -4,16 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.rafael.desafioSpring.domain.dto.request.EventoCreateRequest;
+import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
-import com.rafael.desafioSpring.domain.dto.response.EventoResponse;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
-import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
-import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
-import com.rafael.desafioSpring.domain.mapper.EventoMapper;
 import com.rafael.desafioSpring.domain.mapper.ParticipacaoMapper;
-import com.rafael.desafioSpring.service.CategoriaEventoService;
+import com.rafael.desafioSpring.exception.SemVagasException;
 import com.rafael.desafioSpring.service.EventoService;
 import com.rafael.desafioSpring.service.ParticipacaoService;
 
@@ -35,19 +31,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ParticipacaoController {
 
 	private final ParticipacaoService participacaoService;
+	private final EventoService eventoService;
 	private final ParticipacaoMapper mapper;
 
 	@Autowired
-	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper) {
+	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper, EventoService eventoService) {
         this.participacaoService = participacaoService;
 		this.mapper = participacaoMapper;
+		this.eventoService = eventoService;
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ParticipacaoResponse> getById(@PathVariable final Integer id) {
          return ResponseEntity.ok(mapper.toDto(participacaoService.findById(id))) ;
-    }
+	}
 	
+	@GetMapping(value = "/buscaPorLogin/{login}")
+	public ResponseEntity<List<ParticipacaoResponse>> buscaPorLogin(@PathVariable String login) {
+		return ResponseEntity.ok(participacaoService.buscaPorLogin(login).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
+
 	@GetMapping
 	public ResponseEntity<List<ParticipacaoResponse>> list() {
 		return ResponseEntity.ok(participacaoService.listParticipacao().stream() //
@@ -55,8 +60,10 @@ public class ParticipacaoController {
 				.collect(Collectors.toList()));
 	}
 
-	@PostMapping
-	public ResponseEntity<ParticipacaoResponse> post(@Valid @RequestBody ParticipacaoCreateRequest model) {
+	@PostMapping(value = "/inscricao")
+	public ResponseEntity<ParticipacaoResponse> inscricao(@Valid @RequestBody ParticipacaoCreateRequest model) {
+
+		if(eventoService.buscaPorVagasDisponiveis(model.getIdEvento()) <= 0) throw new SemVagasException("SEM VAGAS DISPONIVEIS!");
 
 		Participacao participacao = participacaoService.createParticipacao(mapper.fromDto(model));
 
@@ -71,11 +78,12 @@ public class ParticipacaoController {
 		return ResponseEntity.ok(true);
 	}
 
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<ParticipacaoResponse> update(@Valid @RequestBody ParticipacaoCreateRequest model, @PathVariable Integer id) {
+	@PutMapping(value = "avaliacao/{idParticipacao}")
+	public ResponseEntity<ParticipacaoResponse> avaliacao(@Valid @RequestBody AvaliacaoCreateRequest model, @PathVariable Integer idParticipacao) {
 
-		return ResponseEntity.ok(mapper.toDto(participacaoService.updateParticipacao(id, mapper.fromDto(model))));
+		return ResponseEntity.ok(mapper.toDto(participacaoService.avaliar(idParticipacao, mapper.fromDtoAvaliacao(model))));
 
 	}
+
 
 }

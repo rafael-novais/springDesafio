@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import com.rafael.desafioSpring.domain.dto.request.EventoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.response.EventoResponse;
-import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
+import com.rafael.desafioSpring.domain.dto.response.VagasDisponiveisResponse;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.mapper.EventoMapper;
 import com.rafael.desafioSpring.service.CategoriaEventoService;
@@ -39,6 +39,33 @@ public class EventoController {
 		this.mapper = eventoMapper;
 		this.categoriaService = categoriaService;
     }
+
+	@GetMapping(value = "/vagasDisponiveis/{idEvento}")
+	public ResponseEntity<VagasDisponiveisResponse> buscaPorVagasDisponiveis(@PathVariable Integer idEvento) {
+
+		Integer vagasDisponiveis = eventoService.buscaPorVagasDisponiveis(idEvento);
+
+		VagasDisponiveisResponse vdr = new VagasDisponiveisResponse();
+
+		vdr.setIdEvento(idEvento);
+		vdr.setVagasDisponiveis(vagasDisponiveis);
+
+		return ResponseEntity.ok(vdr);
+	}
+
+	@GetMapping(value = "/categoria/{id}")
+	public ResponseEntity<List<EventoResponse>> listPorCategoria(@PathVariable Integer id) {
+		return ResponseEntity.ok(eventoService.buscaPorCategoria(id).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
+
+	@GetMapping(value = "/data/{data}")
+	public ResponseEntity<List<EventoResponse>> listPorData(@PathVariable String data) {
+		return ResponseEntity.ok(eventoService.buscaPorData(data).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<EventoResponse> getById(@PathVariable final Integer id) {

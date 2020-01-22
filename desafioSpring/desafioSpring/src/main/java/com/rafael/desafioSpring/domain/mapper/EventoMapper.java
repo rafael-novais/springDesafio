@@ -33,10 +33,8 @@ public class EventoMapper {
         model.setIdCategoriaEvento(categoriaEvento);
 
         StatusEvento statusEvento = new StatusEvento();
-        statusEvento.setIdEventoStatus(input.getIdEventoStatus());
+        statusEvento.setIdEventoStatus(1);
         model.setIdEventoStatus(statusEvento);
-
-        //model.setIdEventoStatus(StatusEvento.builder().IdEventoStatus(input.getIdEventoStatus()).build());
 
         return model;
     }

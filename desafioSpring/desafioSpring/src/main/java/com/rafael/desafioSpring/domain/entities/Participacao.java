@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -26,7 +25,7 @@ public class Participacao {
     @Column(nullable = false)
     private String LoginParticipante;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Boolean FlagPresente;
 
     @Column(nullable = true)

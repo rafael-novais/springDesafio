@@ -1,13 +1,10 @@
 package com.rafael.desafioSpring.domain.mapper;
 
-import com.rafael.desafioSpring.domain.dto.request.EventoCreateRequest;
+import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
-import com.rafael.desafioSpring.domain.dto.response.EventoResponse;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
-import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
-import com.rafael.desafioSpring.domain.entities.StatusEvento;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,13 @@ public class ParticipacaoMapper {
         model.setIdEvento(evento);
         //model.setIdEventoStatus(StatusEvento.builder().IdEventoStatus(input.getIdEventoStatus()).build());
 
+        return model;
+    }
+
+    public Participacao fromDtoAvaliacao(AvaliacaoCreateRequest input) {
+        
+        Participacao model = mapper.map(input, Participacao.class);
+        
         return model;
     }
 

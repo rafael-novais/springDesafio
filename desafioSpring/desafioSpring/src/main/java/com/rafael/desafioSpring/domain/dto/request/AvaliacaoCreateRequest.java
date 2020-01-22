@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoriaCreateRequest {
+public class AvaliacaoCreateRequest {
 
+    private Integer Nota;
+    private String Comentario;
     
-    private Integer IdCategoriaEvento;
-    //@NotEmpty(message = "NomeCategoria não pode ser null")
-    private String NomeCategoria;
-
 }
