@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class VagasDisponiveisResponse {
 
     private Integer idEvento;
+    private String nomeEvento;
+    private Integer limiteVagas;
     private Integer vagasDisponiveis;
 
 }

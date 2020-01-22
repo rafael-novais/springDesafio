@@ -44,18 +44,20 @@ public class EventoController {
 	public ResponseEntity<VagasDisponiveisResponse> buscaPorVagasDisponiveis(@PathVariable Integer idEvento) {
 
 		Integer vagasDisponiveis = eventoService.buscaPorVagasDisponiveis(idEvento);
-
+		Evento evento = eventoService.findById(idEvento);
 		VagasDisponiveisResponse vdr = new VagasDisponiveisResponse();
 
+		vdr.setNomeEvento(evento.getNome());
+		vdr.setLimiteVagas(evento.getLimiteVagas());
 		vdr.setIdEvento(idEvento);
 		vdr.setVagasDisponiveis(vagasDisponiveis);
 
 		return ResponseEntity.ok(vdr);
 	}
 
-	@GetMapping(value = "/categoria/{id}")
-	public ResponseEntity<List<EventoResponse>> listPorCategoria(@PathVariable Integer id) {
-		return ResponseEntity.ok(eventoService.buscaPorCategoria(id).stream() //
+	@GetMapping(value = "/categoria/{idCategoria}")
+	public ResponseEntity<List<EventoResponse>> listPorCategoria(@PathVariable Integer idCategoria) {
+		return ResponseEntity.ok(eventoService.buscaPorCategoria(idCategoria).stream() //
 				.map(x -> mapper.toDto(x)) //
 				.collect(Collectors.toList()));
 	}
