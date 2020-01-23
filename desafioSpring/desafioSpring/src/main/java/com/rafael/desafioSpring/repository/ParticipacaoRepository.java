@@ -11,12 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParticipacaoRepository extends JpaRepository<Participacao, Integer> {
 
-    @Query(value = "SELECT * FROM Participacao WHERE Participacao.IdParticipacao = :idParticipacao", 
-    nativeQuery = true)
+    @Query(value = "SELECT * FROM Participacao WHERE Participacao.IdParticipacao = :idParticipacao", nativeQuery = true)
     Participacao findParticipacaoByIdParticipacao(Integer idParticipacao);
 
-    @Query(value = "SELECT * FROM Participacao WHERE Participacao.LoginParticipante = :login", 
-    nativeQuery = true)
-	List<Participacao> listByLogin(String login);
+    @Query(value = "SELECT * FROM Participacao WHERE Participacao.LoginParticipante = :login", nativeQuery = true)
+    List<Participacao> listByLogin(String login);
 
 }

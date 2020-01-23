@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * definido pela anotação @ResponseStatus.
  */
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class SemVagasException extends RuntimeException {
+public class SemPresencaException extends RuntimeException {
 
     /**
      *
      */
+    
     private static final long serialVersionUID = -6754767023122935455L;
 
-    public SemVagasException(String message) {
+    public SemPresencaException(String message) {
         super(message);
     }
 

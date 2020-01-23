@@ -22,8 +22,8 @@ public class Participacao {
     @JoinColumn(name = "IdEvento", nullable = false)
     private Evento IdEvento;
 
-    @Column(nullable = false)
-    private String LoginParticipante;
+    @Column(name="LoginParticipante", nullable = false)
+    private String loginParticipante;
 
     @Column(nullable = true)
     private Boolean FlagPresente;

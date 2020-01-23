@@ -1,6 +1,8 @@
 package com.rafael.desafioSpring.service;
 
 import java.util.Optional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,9 +25,9 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
-    public Evento createEvento(final Evento model) {
+    public Evento createEvento(Evento model) {
 
-        if(DataEventoValidator.validarDataHora(model.getDataHoraInicio(), model.getDataHoraFim())){
+        if(validarDataHora(model.getDataHoraInicio(), model.getDataHoraFim())){
             return eventoRepository.save(model);
         }
 
@@ -76,13 +78,34 @@ public class EventoService {
 
 	public Integer buscaPorVagasDisponiveis(final Integer idEvento) {
     
-        final Optional op = eventoRepository.findById(idEvento);
-        final Evento evento = (Evento) op.get();
+        final Evento evento = findById(idEvento);
         final Integer inscricoes = eventoRepository.findVagasDoEvento(idEvento);
 
 
         return evento.getLimiteVagas() - inscricoes;
         
-	}
+    }
     
+    public Boolean validarDataHora(Date horaInicio, Date horaFim){
+
+        Long timeInicio = horaInicio.getTime();
+        Long timeFim = horaFim.getTime();
+
+        if(timeFim - timeInicio <= 0) return false;
+        if(timeInicio < new Date().getTime() + 86400000) return false;
+
+        Calendar inicio = Calendar.getInstance();
+        Calendar fim = Calendar.getInstance();
+
+        inicio.setTime(horaInicio);
+        fim.setTime(horaFim);
+
+        if(inicio.get(Calendar.DAY_OF_MONTH) != fim.get(Calendar.DAY_OF_MONTH)) return false;
+        if(inicio.get(Calendar.MONTH) != fim.get(Calendar.MONTH)) return false;
+        if(inicio.get(Calendar.YEAR) != fim.get(Calendar.YEAR)) return false;
+
+        return true;
+
+    }  
+
 }

@@ -1,6 +1,7 @@
 package com.rafael.desafioSpring.domain.mapper;
 
 import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
+import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
 import com.rafael.desafioSpring.domain.entities.Evento;
@@ -38,6 +39,13 @@ public class ParticipacaoMapper {
     }
 
     public Participacao fromDtoAvaliacao(AvaliacaoCreateRequest input) {
+        
+        Participacao model = mapper.map(input, Participacao.class);
+        
+        return model;
+    }
+
+    public Participacao fromDtoFlag(FlagCreateRequest input) {
         
         Participacao model = mapper.map(input, Participacao.class);
         

@@ -1,10 +1,14 @@
 package com.rafael.desafioSpring.service;
 
 import java.util.Optional;
+
+import javax.validation.constraints.Pattern.Flag;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.entities.Participacao;
 import com.rafael.desafioSpring.exception.DataNotFoundException;
 import com.rafael.desafioSpring.repository.*;
@@ -26,6 +30,15 @@ public class ParticipacaoService {
         return participacaoRepository.save(model);
     }
 
+    public Participacao salvar(FlagCreateRequest model, Integer id) {
+        
+        Participacao participacao = findById(id);
+
+        participacao.setFlagPresente(model.getFlag());
+
+        return participacaoRepository.save(participacao);
+    }
+
     public List<Participacao> listParticipacao() {
         return participacaoRepository.findAll();
     }
@@ -33,7 +46,7 @@ public class ParticipacaoService {
     public Participacao findById(Integer id) {
         Optional<Participacao> participacao = participacaoRepository.findById(id);
         
-        return participacao.orElseThrow(() -> new DataNotFoundException("Evento não encontrado!"));
+        return participacao.orElseThrow(() -> new DataNotFoundException("Participação não encontrada!"));
     }
 
     public void deleteParticipacao(Integer id) {

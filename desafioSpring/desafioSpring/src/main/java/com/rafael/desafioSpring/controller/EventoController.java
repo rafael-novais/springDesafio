@@ -31,7 +31,7 @@ public class EventoController {
 
 	private final EventoService eventoService;
 	private final EventoMapper mapper;
-	private CategoriaEventoService categoriaService;
+	private final CategoriaEventoService categoriaService;
 
 	@Autowired
 	public EventoController(EventoService eventoService, EventoMapper eventoMapper, CategoriaEventoService categoriaService) {
