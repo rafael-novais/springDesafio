@@ -1,15 +1,22 @@
 package com.rafael.desafioSpring.service;
 
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.rafael.desafioSpring.domain.dto.request.StatusChangeRequest;
 import com.rafael.desafioSpring.domain.entities.Evento;
+import com.rafael.desafioSpring.domain.entities.StatusEvento;
+import com.rafael.desafioSpring.exception.CancelamentoException;
 import com.rafael.desafioSpring.exception.DataErradaException;
 import com.rafael.desafioSpring.exception.DataNotFoundException;
+import com.rafael.desafioSpring.exception.StatusInvalidoException;
 import com.rafael.desafioSpring.repository.*;
 import com.rafael.desafioSpring.validator.DataEventoValidator;
 
@@ -19,10 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class EventoService {
 
     private final EventoRepository eventoRepository;
+    private final StatusEventoService statusService;
 
     @Autowired
-    public EventoService(final EventoRepository eventoRepository) {
+    public EventoService(final EventoRepository eventoRepository, StatusEventoService statusEventoService) {
         this.eventoRepository = eventoRepository;
+        this.statusService = statusEventoService;
     }
 
     public Evento createEvento(Evento model) {
@@ -106,6 +115,55 @@ public class EventoService {
 
         return true;
 
+    }
+
+	public Evento updateStatusEvento(@Valid StatusChangeRequest model, Integer idEvento) {
+
+        Evento evento = findById(idEvento);
+
+        if(evento.getIdEventoStatus().getIdEventoStatus() == 4 || evento.getIdEventoStatus().getIdEventoStatus() == 3){
+            throw new StatusInvalidoException("NÃO PODE MODIFICAR STATUS DE EVENTOS CANCELADOS OU CONCLUÍDOS!");
+        }
+
+        if(model.getIdEventoStatus() == 4){
+            if(!validarDataCancelamento(evento.getDataHoraInicio())){
+                throw new CancelamentoException("NÃO PODE CANCELAR UM EVENTO QUE ACONTECE HOJE!");
+            }
+            if(!validarUsuariosInscritos(evento)){
+                throw new CancelamentoException("NÃO PODE CANCELAR UM EVENTO QUE JÁ TEM PARTICIPANTES INSCRITOS!");
+            }
+        }
+        
+        StatusEvento se = statusService.findById(model.getIdEventoStatus());
+
+        evento.setIdEventoStatus(se);
+        eventoRepository.save(evento);
+
+        return evento;
+
     }  
+    
+    public Boolean validarDataCancelamento(Date dataEvento){
+
+        Calendar evento = Calendar.getInstance();
+        Calendar hoje = Calendar.getInstance();
+
+        evento.setTime(dataEvento);
+        hoje.setTime(new Date());
+
+        if(evento.get(Calendar.DAY_OF_MONTH) == hoje.get(Calendar.DAY_OF_MONTH)) return false;
+
+        return true;
+    }
+
+    public Boolean validarUsuariosInscritos(Evento evento){
+
+        int vagas = evento.getLimiteVagas();
+        int inscritos = buscaPorVagasDisponiveis(evento.getIdEvento());
+
+        if(vagas - inscritos != vagas) return false;
+      
+        return true;
+    }
 
 }

@@ -7,7 +7,9 @@ import javax.validation.Valid;
 import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
+import com.rafael.desafioSpring.domain.dto.response.InscritosResponse;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
+import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
 import com.rafael.desafioSpring.domain.mapper.ParticipacaoMapper;
 import com.rafael.desafioSpring.exception.SemPresencaException;
@@ -55,6 +57,15 @@ public class ParticipacaoController {
 				.collect(Collectors.toList()));
 	}
 
+	@GetMapping(value = "/inscritosPorEvento/{idEvento}")
+	public ResponseEntity<List<ParticipacaoResponse>> buscaInscritosNoEvento(@PathVariable Integer idEvento) {
+
+		return ResponseEntity.ok(participacaoService.buscarInscritosNoEvento(idEvento).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+
+	}
+
 	@GetMapping
 	public ResponseEntity<List<ParticipacaoResponse>> list() {
 		return ResponseEntity.ok(participacaoService.listParticipacao().stream() //
@@ -65,11 +76,7 @@ public class ParticipacaoController {
 	@PostMapping(value = "/inscricao")
 	public ResponseEntity<ParticipacaoResponse> inscricao(@Valid @RequestBody ParticipacaoCreateRequest model) {
 
-		if(eventoService.buscaPorVagasDisponiveis(model.getIdEvento()) <= 0) throw new SemVagasException("SEM VAGAS DISPONIVEIS!");
-
-		Participacao participacao = participacaoService.createParticipacao(mapper.fromDto(model));
-
-		return ResponseEntity.ok(mapper.toDto(participacao));
+		return ResponseEntity.ok(mapper.toDto(participacaoService.inscrever(mapper.fromDto(model))));
 	}
 
 	@DeleteMapping(value = "/{id}")
@@ -107,6 +114,5 @@ public class ParticipacaoController {
 		return false;
 
 	}
-
 
 }

@@ -17,4 +17,8 @@ public interface ParticipacaoRepository extends JpaRepository<Participacao, Inte
     @Query(value = "SELECT * FROM Participacao WHERE Participacao.LoginParticipante = :login", nativeQuery = true)
     List<Participacao> listByLogin(String login);
 
+    @Query(value = "SELECT * FROM Participacao WHERE Participacao.IdEvento = :idEvento", nativeQuery = true)
+    List<Participacao> listParticipacaoPorEvento(Integer idEvento);
+
 }
+

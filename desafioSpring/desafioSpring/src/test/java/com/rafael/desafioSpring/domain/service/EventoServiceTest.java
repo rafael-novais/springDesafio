@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoServiceTest {
@@ -36,28 +37,29 @@ public class EventoServiceTest {
     @Rule
     public ExpectedException expected = ExpectedException.none();
 
+    @Autowired
     public Evento evento;
 
     public EventoServiceTest() {
         this.evento = new Evento();
-        this.evento.setDataHoraInicio(new Date(new Date().getTime() + 86400001));
-        this.evento.setDataHoraFim(new Date(new Date().getTime() + 86400010));
+        this.evento.setDataHoraInicio(new Date(new Date().getTime() + 86501101));
+        this.evento.setDataHoraFim(new Date(new Date().getTime() + 86501102));
     }
 
-    // @Test
-    // public void should_createEvento() {
+    @Test
+    public void should_createEvento() {
 
-    //     //given
-    //     when(repository.save(evento)).thenReturn(evento);
+        //given
+        when(repository.save(evento)).thenReturn(evento);
       
-    //     //when
-    //     Evento eventoCriado = service.createEvento(evento);
+        //when
+        Evento eventoCriado = service.createEvento(evento);
 
-    //     //then 
-    //     verify(repository, times(1)).save(evento);
-    //     assertEquals(eventoCriado, evento);
+        //then 
+        verify(repository, times(1)).save(evento);
+        assertEquals(eventoCriado, evento);
 
-    // }
+    }
 
     @Test
     public void should_listEvento(){
@@ -126,6 +128,7 @@ public class EventoServiceTest {
         Boolean testeComMesesDiferentes = service.validarDataHora(new Date(new Date().getTime() + 172800002), new Date(new Date().getTime() + 2678400031L));
         Boolean testeComAnosDiferentes = service.validarDataHora(new Date(new Date().getTime() + 172800002), new Date(new Date().getTime() + 32140800372L));
         Boolean testeDiasCorretos = service.validarDataHora(new Date(new Date().getTime() + 172800002), new Date(new Date().getTime() + 172800003));
+        Boolean teste = service.validarDataHora(new Date(new Date().getTime() + 86400001), new Date(new Date().getTime() + 86400010));
 
         assertEquals(testeComInicioEFimIguais, false);
         assertEquals(testeDataFimMenorQueInicio, false);
@@ -133,6 +136,7 @@ public class EventoServiceTest {
         assertEquals(testeComMesesDiferentes, false);
         assertEquals(testeComAnosDiferentes, false);
         assertEquals(testeDiasCorretos, true);
+        assertEquals(teste, true);
 
     }
 

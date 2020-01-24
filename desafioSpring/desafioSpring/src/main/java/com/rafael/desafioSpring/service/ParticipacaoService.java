@@ -9,8 +9,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
+import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
 import com.rafael.desafioSpring.exception.DataNotFoundException;
+import com.rafael.desafioSpring.exception.EventoIndisponivelException;
+import com.rafael.desafioSpring.exception.SemVagasException;
+import com.rafael.desafioSpring.exception.StatusInvalidoException;
 import com.rafael.desafioSpring.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ParticipacaoService {
 
     private final ParticipacaoRepository participacaoRepository;
+    private final EventoService eventoService;
+
 
     @Autowired
-    public ParticipacaoService(ParticipacaoRepository participacaoRepository) {
+    public ParticipacaoService(ParticipacaoRepository participacaoRepository, EventoService eventoService) {
         this.participacaoRepository = participacaoRepository;
+        this.eventoService = eventoService;
     }
 
     public Participacao createParticipacao(Participacao model) {
@@ -82,5 +89,43 @@ public class ParticipacaoService {
         
         return participacaoRepository.listByLogin(login);
     }
+
+    public Participacao inscrever(Participacao model){
+
+        if(!validarStatusEvento(model.getIdEvento().getIdEvento())) throw new EventoIndisponivelException("EVENTO NÃO ESTÁ ABERTO A NOVAS INSCRIÇÕES!");
+        if(eventoService.buscaPorVagasDisponiveis(model.getIdEvento().getIdEvento()) <= 0) throw new SemVagasException("SEM VAGAS DISPONIVEIS!");
+
+		return createParticipacao(model);
+
+    }
+
+    public Boolean validarStatusEvento(Integer idEvento) {
+
+        Evento evento = eventoService.findById(idEvento);
+        
+        Integer status = evento.getIdEventoStatus().getIdEventoStatus();
+
+        switch(status){
+            case 1:
+                return true;
+            case 2:
+                return false;
+            case 3: 
+                return false;
+            case 4:
+                return false;
+                
+            default:
+                throw new StatusInvalidoException("STATUS INSERIDO NÃO É UM STATUS VÁLIDO!");    
+        }
+
+
+	}
+
+	public List<Participacao> buscarInscritosNoEvento(Integer idEvento) {
+
+        return participacaoRepository.listParticipacaoPorEvento(idEvento);
+
+	}
     
 }

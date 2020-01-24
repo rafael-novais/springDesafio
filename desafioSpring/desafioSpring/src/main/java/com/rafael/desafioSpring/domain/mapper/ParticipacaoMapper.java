@@ -1,8 +1,11 @@
 package com.rafael.desafioSpring.domain.mapper;
 
+import java.util.List;
+
 import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
+import com.rafael.desafioSpring.domain.dto.response.InscritosResponse;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
@@ -51,5 +54,6 @@ public class ParticipacaoMapper {
         
         return model;
     }
+
 
 }

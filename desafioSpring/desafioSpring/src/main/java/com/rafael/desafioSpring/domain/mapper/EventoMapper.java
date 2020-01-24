@@ -2,6 +2,7 @@ package com.rafael.desafioSpring.domain.mapper;
 
 import com.rafael.desafioSpring.domain.dto.request.EventoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.response.EventoResponse;
+import com.rafael.desafioSpring.domain.dto.response.StatusEventoResponse;
 import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.StatusEvento;
@@ -37,6 +38,18 @@ public class EventoMapper {
         model.setIdEventoStatus(statusEvento);
 
         return model;
+    }
+
+    public StatusEventoResponse toDtoStatus(Evento input) {
+
+        StatusEventoResponse ser = new StatusEventoResponse();
+
+        ser.setIdEvento(input.getIdEvento());
+        ser.setNomeEvento(input.getNome());
+        ser.setData(input.getDataHoraInicio());
+        ser.setStatus(input.getIdEventoStatus().getNomeStatus());
+
+        return ser;
     }
 
 }
