@@ -44,6 +44,7 @@ public class EventoServiceTest {
         this.evento = new Evento();
         this.evento.setDataHoraInicio(new Date(new Date().getTime() + 86501101));
         this.evento.setDataHoraFim(new Date(new Date().getTime() + 86501102));
+        this.evento.setLimiteVagas(5);
     }
 
     @Test
@@ -137,6 +138,29 @@ public class EventoServiceTest {
         assertEquals(testeComAnosDiferentes, false);
         assertEquals(testeDiasCorretos, true);
         assertEquals(teste, true);
+
+    }
+
+    @Test
+    public void should_buscarPorVagasDisponiveis(){
+
+        when(repository.findById(anyInt())).thenReturn(Optional.of(evento)); 
+        when(repository.findVagasDoEvento(anyInt())).thenReturn(2);
+        
+        Integer vagas = repository.findById(2).get().getLimiteVagas() - repository.findVagasDoEvento(3);
+         
+        assertEquals(service.buscaPorVagasDisponiveis(2), Integer.valueOf(3));
+
+    }
+
+    @Test
+    public void should_validarDataCancelamento(){
+
+        Boolean testeFalse = service.validarDataCancelamento(new Date());
+        Boolean testeTrue = service.validarDataCancelamento(new Date(new Date().getTime() + 86501101));
+         
+        assertEquals(testeFalse, false);
+        assertEquals(testeTrue, true);
 
     }
 
