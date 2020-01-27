@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.rafael.desafioSpring.domain.entities.Evento;
-import com.rafael.desafioSpring.exception.DataErradaException;
 import com.rafael.desafioSpring.repository.EventoRepository;
 import com.rafael.desafioSpring.service.EventoService;
 

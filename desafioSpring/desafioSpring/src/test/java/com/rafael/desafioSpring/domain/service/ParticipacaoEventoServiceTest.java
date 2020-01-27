@@ -3,7 +3,6 @@ package com.rafael.desafioSpring.domain.service;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -81,28 +80,33 @@ public class ParticipacaoEventoServiceTest {
 
     }
 
+    @Test
+    public void should_inscrever(){
 
-    ///////INJECT MOCK TEM ALGO A VER COM O INSUCESSO DESSE TESTE, PORÉM NÃO CONSIGO ENXERGAR
-    // @Test
-    // public void should_inscrever(){
+        //sets para passar na 1ª condição
+        this.evento.setIdEventoStatus(this.statusEvento);
+        this.statusEvento.setIdEventoStatus(1);
+        when(eventoService.findById(any())).thenReturn(this.evento);
 
+        //mock da 2ª condição
+        when(eventoService.buscaPorVagasDisponiveis(any())).thenReturn(2);
 
-    //     //usando esse serviceTeste (service mocado com @Mock), o when funciona como esperado
-    //     when(serviceTeste.createParticipacao(this.participacao)).thenReturn(this.participacao);
-    //     //já esse service (mocado com @InjectMock), o when não funciona e o metodo é de fato chamado
-    //     when(service.createParticipacao(this.participacao)).thenReturn(this.participacao);
+        //sets para passar na 3ª condição
+        this.participacao.setLoginParticipante("sgssgdg");
+        Participacao testeP = new Participacao();
+        testeP.setLoginParticipante("GasdaFaEl");
+        List<Participacao> list = new ArrayList<>();
+        list.add(testeP);
+        when(repository.listParticipacaoPorEvento(any())).thenReturn(list);
 
-    //     when(serviceTeste.validarStatusEvento(this.evento.getIdEvento())).thenReturn(true);
-    //     when(eventoService.validarUsuariosInscritos(any())).thenReturn(false);
-    //     when(serviceTeste.validarDuplicidadeDeInscricao(any(), any())).thenReturn(false);
+        when(service.createParticipacao(this.participacao)).thenReturn(this.participacao);
 
-    
-    //     Participacao retorno = serviceTeste.inscrever(this.participacao);
+        Participacao retorno = service.inscrever(this.participacao);
 
-    //     // then
-    //     assertEquals(retorno, this.participacao);
+        // then
+        assertEquals(retorno, this.participacao);
 
-    // }
+    }
 
     @Test
     public void should_validarStatusEvento(){
@@ -142,7 +146,6 @@ public class ParticipacaoEventoServiceTest {
         this.participacao.setLoginParticipante("raFaEl");
         List<Participacao> list = new ArrayList<>();
         list.add(this.participacao);
-
         when(service.buscarInscritosNoEvento(anyInt())).thenReturn(list);
 
         Boolean teste = service.validarDuplicidadeDeInscricao("RafaeL", 2);
@@ -217,10 +220,5 @@ public class ParticipacaoEventoServiceTest {
         assertEquals(teste, list);
 
     }
-
-
-
-
-
 
 }

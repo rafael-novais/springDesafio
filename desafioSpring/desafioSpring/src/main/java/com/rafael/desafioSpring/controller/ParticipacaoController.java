@@ -90,7 +90,7 @@ public class ParticipacaoController {
 	@PutMapping(value = "avaliacao/{idParticipacao}")
 	public ResponseEntity<ParticipacaoResponse> avaliacao(@Valid @RequestBody AvaliacaoCreateRequest model, @PathVariable Integer idParticipacao) {
 
-		if(!validarPresenca(idParticipacao)) throw new SemPresencaException("VOCÊ NÃO PODE AVALIAR UM EVENTO QUE NÃO ESTEVE PRESENTE!");
+		if(!participacaoService.validarPresenca(idParticipacao)) throw new SemPresencaException("VOCÊ NÃO PODE AVALIAR UM EVENTO QUE NÃO ESTEVE PRESENTE!");
 
 		return ResponseEntity.ok(mapper.toDto(participacaoService.avaliar(idParticipacao, mapper.fromDtoAvaliacao(model))));
 
@@ -102,16 +102,6 @@ public class ParticipacaoController {
 		participacaoService.salvar(model, idParticipacao);
 
 		return ResponseEntity.ok(true);
-
-	}
-
-	public Boolean validarPresenca(Integer id){
-
-		ParticipacaoResponse participacao = getById(id).getBody();
-
-		if(participacao.getFlagPresente()) return true;
-
-		return false;
 
 	}
 

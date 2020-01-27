@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.StatusEvento;
-import com.rafael.desafioSpring.repository.CategoriaEventoRepository;
 import com.rafael.desafioSpring.repository.StatusEventoRepository;
-import com.rafael.desafioSpring.service.CategoriaEventoService;
 import com.rafael.desafioSpring.service.StatusEventoService;
 
 import org.junit.Test;

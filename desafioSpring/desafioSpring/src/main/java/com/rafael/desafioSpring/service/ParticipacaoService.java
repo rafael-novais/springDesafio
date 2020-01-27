@@ -146,5 +146,15 @@ public class ParticipacaoService {
 
         return false;
     }
+
+    public Boolean validarPresenca(Integer id){
+
+		Participacao participacao = findById(id);
+
+		if(participacao.getFlagPresente()) return true;
+
+		return false;
+
+	}
     
 }
