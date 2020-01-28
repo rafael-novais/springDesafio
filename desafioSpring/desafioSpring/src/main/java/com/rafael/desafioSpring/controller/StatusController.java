@@ -26,7 +26,7 @@ public class StatusController {
         this.statusEventoService = statusEventoService;
 		this.mapper = statusMapper;
     }
-	
+	//s
 	@GetMapping
 	public ResponseEntity<List<StatusResponse>> list() {
 		return ResponseEntity.ok(statusEventoService.listStatus().stream() //
