@@ -109,13 +109,13 @@ public class EventoController {
 		return ResponseEntity.ok(mapper.toDto(evento));
 	}
 
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
+	// @DeleteMapping(value = "/{id}")
+	// public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
 
-		eventoService.deleteEvento(id);
+	// 	eventoService.deleteEvento(id);
 
-		return ResponseEntity.ok(true);
-	}
+	// 	return ResponseEntity.ok(true);
+	// }
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EventoResponse> update(@Valid @RequestBody EventoCreateRequest model, @PathVariable Integer id) {

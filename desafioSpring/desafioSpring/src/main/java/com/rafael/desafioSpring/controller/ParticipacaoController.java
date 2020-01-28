@@ -79,13 +79,13 @@ public class ParticipacaoController {
 		return ResponseEntity.ok(mapper.toDto(participacaoService.inscrever(mapper.fromDto(model))));
 	}
 
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
+	// @DeleteMapping(value = "/{id}")
+	// public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
 
-		participacaoService.deleteParticipacao(id);
+	// 	participacaoService.deleteParticipacao(id);
 
-		return ResponseEntity.ok(true);
-	}
+	// 	return ResponseEntity.ok(true);
+	// }
 
 	@PutMapping(value = "avaliacao/{idParticipacao}")
 	public ResponseEntity<ParticipacaoResponse> avaliacao(@Valid @RequestBody AvaliacaoCreateRequest model, @PathVariable Integer idParticipacao) {

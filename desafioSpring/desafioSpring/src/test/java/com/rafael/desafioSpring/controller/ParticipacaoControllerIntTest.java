@@ -197,4 +197,32 @@ public class ParticipacaoControllerIntTest {
 
     }
 
+    @Test   //testa caminho /status/{id};
+    public void should_getById() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/participacao/1")) // Executa
+        .andDo(MockMvcResultHandlers.print()) //pega resultado
+        .andExpect(MockMvcResultMatchers.status().isOk()) //faz a validação.
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.anything()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.loginParticipante").value("loginParticipante"));
+        //.andExpect(MockMvcResultMatchers.jsonPath("$[1]").value("World"));
+
+    }
+
+    // @Test   //testa caminho /status/{id};
+    // public void should_delete() throws Exception {
+
+    //     mockMvc.perform(MockMvcRequestBuilders.delete("/participacao/1")) // Executa
+    //     .andDo(MockMvcResultHandlers.print()) //pega resultado
+    //     .andExpect(MockMvcResultMatchers.status().isOk()) //faz a validação.
+    //     .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+    //     .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.anything()))
+    //     .andExpect(MockMvcResultMatchers.jsonPath("$").value("true"));
+    //     //.andExpect(MockMvcResultMatchers.jsonPath("$[1]").value("World"));
+
+    //     initialize();
+
+    // }
+
 }    

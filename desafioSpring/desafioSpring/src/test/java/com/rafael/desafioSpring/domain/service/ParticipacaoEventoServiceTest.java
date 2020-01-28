@@ -48,6 +48,12 @@ public class ParticipacaoEventoServiceTest {
 
         this.evento.setIdEvento(1);
         this.participacao.setIdEvento(evento);
+        this.participacao.setComentario("Comentario");
+        this.participacao.setFlagPresente(true);
+        this.participacao.setIdEvento(evento);
+        this.participacao.setIdParticipacao(1);
+        this.participacao.setLoginParticipante("loginParticipante");
+        this.participacao.setNota(2);
 
     }
 
@@ -218,6 +224,18 @@ public class ParticipacaoEventoServiceTest {
         List<Participacao> teste = service.buscaPorLogin("teste");
         
         assertEquals(teste, list);
+
+    }
+
+    @Test
+    public void should_updateParticipacao(){
+
+        when(repository.findById(anyInt())).thenReturn(Optional.of(this.participacao));
+        when(repository.save(any())).thenReturn(this.participacao);
+
+        Participacao teste = service.updateParticipacao(1, this.participacao);
+        
+        assertEquals(teste, this.participacao);
 
     }
 

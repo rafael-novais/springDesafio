@@ -58,10 +58,10 @@ public class EventoService {
         return evento.orElseThrow(() -> new DataNotFoundException("Evento não encontrado!"));
     }
 
-    public void deleteEvento(final Integer id) {
-        eventoRepository.delete(findById(id));;
-        listEvento();
-    }
+    // public void deleteEvento(final Integer id) {
+    //     eventoRepository.delete(findById(id));;
+    //     listEvento();
+    // }
 
     public Evento updateEvento(final Integer id, final Evento model) {
         final Optional<Evento> evento = eventoRepository.findById(id);
@@ -79,8 +79,6 @@ public class EventoService {
     }
 
 	public List<Evento> buscaPorData(final String data) {
-
-        DataEventoValidator.validarFormatoData(data);
 
 		return eventoRepository.findEventoByDate(data);
 	}

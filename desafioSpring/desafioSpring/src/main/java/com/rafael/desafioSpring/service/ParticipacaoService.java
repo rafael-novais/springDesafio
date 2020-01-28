@@ -57,13 +57,13 @@ public class ParticipacaoService {
         return participacao.orElseThrow(() -> new DataNotFoundException("Participação não encontrada!"));
     }
 
-    public void deleteParticipacao(final Integer id) {
-        participacaoRepository.delete(findById(id));
-        ;
-        listParticipacao();
-    }
+    // public void deleteParticipacao(final Integer id) {
+    //     participacaoRepository.delete(findById(id));
+    //     listParticipacao();
+    // }
 
     public Participacao updateParticipacao(final Integer id, final Participacao model) {
+        
         final Optional<Participacao> participacao = participacaoRepository.findById(id);
         participacao.orElseThrow(() -> new DataNotFoundException("Client Not found"));
         final Participacao p = participacao.get();

@@ -48,18 +48,6 @@ public class CategoriaControllerIntTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper mapper;
-
-    @Autowired
-    private EventoService eventoService;
-
-    @Autowired
-    private ParticipacaoService participacaoService;
-
-    @Autowired
-    private CategoriaEventoService categoriaService;
-
-    @Autowired
     private EventoRepository repository;
 
     @Autowired

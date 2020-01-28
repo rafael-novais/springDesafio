@@ -11,7 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.Evento;
+import com.rafael.desafioSpring.domain.entities.StatusEvento;
 import com.rafael.desafioSpring.repository.EventoRepository;
 import com.rafael.desafioSpring.service.EventoService;
 
@@ -44,6 +46,13 @@ public class EventoServiceTest {
         this.evento.setDataHoraInicio(new Date(new Date().getTime() + 86501101));
         this.evento.setDataHoraFim(new Date(new Date().getTime() + 86501102));
         this.evento.setLimiteVagas(5);
+        this.evento.setIdEvento(1);
+        this.evento.setIdEventoStatus(new StatusEvento());
+        this.evento.setIdCategoriaEvento(new CategoriaEvento());
+        this.evento.setLocal("Local");
+        this.evento.setNome("nome");
+        this.evento.setDescricao("Descricao");
+
     }
 
     @Test
@@ -162,5 +171,23 @@ public class EventoServiceTest {
         assertEquals(testeTrue, true);
 
     }
+
+    @Test
+    public void should_validarUsuariosInscritos(){
+
+        when(repository.findById(anyInt())).thenReturn(Optional.of(evento)); 
+        when(repository.findVagasDoEvento(anyInt())).thenReturn(2); 
+
+        Boolean testeFalse = service.validarUsuariosInscritos(evento);
+
+        evento.setLimiteVagas(2);
+
+        Boolean testeTrue = service.validarUsuariosInscritos(evento);
+         
+        assertEquals(testeFalse, false);
+        assertEquals(testeTrue, true);
+
+    }
+
 
 }
