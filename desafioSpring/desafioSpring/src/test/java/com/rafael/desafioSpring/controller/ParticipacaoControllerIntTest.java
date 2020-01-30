@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
-import com.rafael.desafioSpring.domain.dto.response.StatusEventoResponse;
 import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.Participacao;
@@ -15,8 +14,6 @@ import com.rafael.desafioSpring.repository.CategoriaEventoRepository;
 import com.rafael.desafioSpring.repository.EventoRepository;
 import com.rafael.desafioSpring.repository.ParticipacaoRepository;
 import com.rafael.desafioSpring.repository.StatusEventoRepository;
-import com.rafael.desafioSpring.service.EventoService;
-import com.rafael.desafioSpring.service.ParticipacaoService;
 import com.rafael.desafioSpring.utils.IntegrationTestConfig;
 
 import org.hamcrest.Matchers;
@@ -51,12 +48,6 @@ public class ParticipacaoControllerIntTest {
 
     @Autowired
     private ObjectMapper mapper;
-
-    @Autowired
-    private EventoService eventoService;
-
-    @Autowired
-    private ParticipacaoService participacaoService;
 
     @Autowired
     private EventoRepository repository;

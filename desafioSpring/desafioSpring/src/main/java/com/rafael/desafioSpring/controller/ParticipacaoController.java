@@ -1,48 +1,39 @@
 package com.rafael.desafioSpring.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import com.rafael.desafioSpring.domain.dto.request.AvaliacaoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.ParticipacaoCreateRequest;
-import com.rafael.desafioSpring.domain.dto.response.InscritosResponse;
 import com.rafael.desafioSpring.domain.dto.response.ParticipacaoResponse;
-import com.rafael.desafioSpring.domain.entities.Evento;
-import com.rafael.desafioSpring.domain.entities.Participacao;
 import com.rafael.desafioSpring.domain.mapper.ParticipacaoMapper;
 import com.rafael.desafioSpring.exception.SemPresencaException;
-import com.rafael.desafioSpring.exception.SemVagasException;
-import com.rafael.desafioSpring.service.EventoService;
 import com.rafael.desafioSpring.service.ParticipacaoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-
 @RestController
 @RequestMapping("/participacao")
 public class ParticipacaoController {
 
 	private final ParticipacaoService participacaoService;
-	private final EventoService eventoService;
 	private final ParticipacaoMapper mapper;
 
 	@Autowired
-	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper, EventoService eventoService) {
+	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper) {
         this.participacaoService = participacaoService;
 		this.mapper = participacaoMapper;
-		this.eventoService = eventoService;
     }
 
     @GetMapping(value = "/{id}")

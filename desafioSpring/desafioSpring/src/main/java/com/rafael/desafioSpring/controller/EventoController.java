@@ -1,6 +1,7 @@
 package com.rafael.desafioSpring.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -10,39 +11,32 @@ import com.rafael.desafioSpring.domain.dto.response.EventoResponse;
 import com.rafael.desafioSpring.domain.dto.response.StatusEventoResponse;
 import com.rafael.desafioSpring.domain.dto.response.VagasDisponiveisResponse;
 import com.rafael.desafioSpring.domain.entities.Evento;
-import com.rafael.desafioSpring.domain.entities.StatusEvento;
 import com.rafael.desafioSpring.domain.mapper.EventoMapper;
-import com.rafael.desafioSpring.service.CategoriaEventoService;
 import com.rafael.desafioSpring.service.EventoService;
-import com.rafael.desafioSpring.service.StatusEventoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/eventos")
 public class EventoController {
 
 	private final EventoService eventoService;
 	private final EventoMapper mapper;
-	private final CategoriaEventoService categoriaService;
 	
-
 	@Autowired
-	public EventoController(EventoService eventoService, EventoMapper eventoMapper, CategoriaEventoService categoriaService) {
+	public EventoController(EventoService eventoService, EventoMapper eventoMapper) {
         this.eventoService = eventoService;
 		this.mapper = eventoMapper;
-		this.categoriaService = categoriaService;
 		
     }
 
@@ -94,6 +88,7 @@ public class EventoController {
          return ResponseEntity.ok(mapper.toDto(eventoService.findById(id))) ;
     }
 	
+	@CrossOrigin
 	@GetMapping
 	public ResponseEntity<List<EventoResponse>> list() {
 		return ResponseEntity.ok(eventoService.listEvento().stream() //

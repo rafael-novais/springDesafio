@@ -154,8 +154,6 @@ public class EventoServiceTest {
 
         when(repository.findById(anyInt())).thenReturn(Optional.of(evento)); 
         when(repository.findVagasDoEvento(anyInt())).thenReturn(2);
-        
-        Integer vagas = repository.findById(2).get().getLimiteVagas() - repository.findVagasDoEvento(3);
          
         assertEquals(service.buscaPorVagasDisponiveis(2), Integer.valueOf(3));
 

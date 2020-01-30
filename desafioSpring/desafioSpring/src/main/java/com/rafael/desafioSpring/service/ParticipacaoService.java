@@ -1,12 +1,7 @@
 package com.rafael.desafioSpring.service;
 
-import java.util.Optional;
-
-import javax.validation.constraints.Pattern.Flag;
-
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.rafael.desafioSpring.domain.dto.request.FlagCreateRequest;
 import com.rafael.desafioSpring.domain.entities.Evento;
@@ -16,9 +11,10 @@ import com.rafael.desafioSpring.exception.DuplicidadeInscricaoException;
 import com.rafael.desafioSpring.exception.EventoIndisponivelException;
 import com.rafael.desafioSpring.exception.SemVagasException;
 import com.rafael.desafioSpring.exception.StatusInvalidoException;
-import com.rafael.desafioSpring.repository.*;
+import com.rafael.desafioSpring.repository.ParticipacaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ParticipacaoService {

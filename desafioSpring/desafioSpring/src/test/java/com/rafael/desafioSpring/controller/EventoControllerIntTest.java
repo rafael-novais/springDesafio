@@ -5,14 +5,12 @@ import java.util.Date;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rafael.desafioSpring.domain.dto.request.EventoCreateRequest;
 import com.rafael.desafioSpring.domain.dto.request.StatusChangeRequest;
-import com.rafael.desafioSpring.domain.dto.response.StatusEventoResponse;
 import com.rafael.desafioSpring.domain.entities.CategoriaEvento;
 import com.rafael.desafioSpring.domain.entities.Evento;
 import com.rafael.desafioSpring.domain.entities.StatusEvento;
 import com.rafael.desafioSpring.repository.CategoriaEventoRepository;
 import com.rafael.desafioSpring.repository.EventoRepository;
 import com.rafael.desafioSpring.repository.StatusEventoRepository;
-import com.rafael.desafioSpring.service.EventoService;
 import com.rafael.desafioSpring.utils.IntegrationTestConfig;
 
 import org.hamcrest.Matchers;
@@ -27,7 +25,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -47,9 +44,6 @@ public class EventoControllerIntTest {
 
     @Autowired
     private ObjectMapper mapper;
-
-    @Autowired
-    private EventoService eventoService;
 
     @Autowired
     private EventoRepository repository;

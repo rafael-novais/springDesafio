@@ -1,14 +1,11 @@
 package com.rafael.desafioSpring.service;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+import javax.validation.Valid;
 
 import com.rafael.desafioSpring.domain.dto.request.StatusChangeRequest;
 import com.rafael.desafioSpring.domain.entities.Evento;
@@ -17,10 +14,10 @@ import com.rafael.desafioSpring.exception.CancelamentoException;
 import com.rafael.desafioSpring.exception.DataErradaException;
 import com.rafael.desafioSpring.exception.DataNotFoundException;
 import com.rafael.desafioSpring.exception.StatusInvalidoException;
-import com.rafael.desafioSpring.repository.*;
-import com.rafael.desafioSpring.validator.DataEventoValidator;
+import com.rafael.desafioSpring.repository.EventoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EventoService {
